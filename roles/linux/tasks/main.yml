@@ -1,0 +1,60 @@
+---
+
+- name: update apt cache
+  become: yes
+  become_method: sudo
+  apt: update_cache=yes cache_valid_time=3600
+
+- name: upgrade to the latest packages
+  become: yes
+  become_method: sudo
+  apt: upgrade=dist
+  
+- name: install packages
+  become: yes
+  become_method: sudo
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - mc
+    - htop
+    - git
+    - mercurial
+    - apache2
+    - libapache2-mod-php5
+    - mysql-server-5.6
+    - mysql-client-5.6
+    - python-mysqldb
+    - php5-mysql
+    - php5-intl
+    - phpmyadmin
+    
+- name: start Apache
+  become: yes
+  become_method: sudo
+  service: name=apache2 state=running enabled=yes
+  
+- name: enabled mod_rewrite
+  become: yes
+  become_method: sudo
+  apache2_module: name=rewrite state=present
+  
+- name: Change project directory permissions
+  become: yes
+  become_method: sudo
+  command: find /var/www -type d -exec chmod 0777 {} \;
+  
+- name: set Sites available
+  become: yes
+  become_method: sudo
+  template:
+    src: templates/sites-available.j2
+    dest: "/etc/apache2/sites-available/hosts.conf"
+    mode: 0644
+    owner: root
+    group: root
+  notify:
+    - restart apache
+
+- name: clone projects
+  git: repo={{ item.git_repo }} dest={{ item.virtual_path }} accept_hostkey=yes update=no
+  with_items: "{{ projects }}"

@@ -1,0 +1,31 @@
+--- 
+
+- name: Checking if known hists file exists
+  stat: path="{{ ssh_known_hosts_file }}"
+  register: ssh_known_hosts_file_exists
+  tags: [ ssh ]
+
+- name: Create known hosts file is doesn't exist
+  become: yes
+  become_method: sudo
+  file: "path={{ ssh_known_hosts_file }} state=touch"
+  tags: [ ssh ]
+  when: not ssh_known_hosts_file_exists.stat.exists
+
+#выкинет по ошибке на каждый ненайденый ключ, это нормально
+- name: Check host name availability
+  become: yes
+  become_method: sudo
+  shell: "ssh-keygen -f {{ ssh_known_hosts_file }} -F {{ item }}"
+  with_items: "{{ ssh_known_hosts }}"
+  register: ssh_known_host_results
+  ignore_errors: True
+  tags: [ ssh ]
+
+- name: Scan the public key
+  become: yes
+  become_method: sudo
+  shell: "{{ ssh_known_hosts_command }} {{ item.item }} >> {{ ssh_known_hosts_file }}"
+  with_items: "{{ ssh_known_host_results.results }}"
+  when: (item.stdout is defined) and (item.stdout == "")
+  tags: [ ssh ]

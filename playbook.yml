@@ -1,0 +1,15 @@
+---
+
+- hosts: all
+
+  vars_files:
+    - config.yml
+
+  roles:
+    - role: known_hosts
+    - role: linux
+    - role: mysql
+    
+  handlers:
+  - name: restart apache
+    service: name=apache state=restarted
