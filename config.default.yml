@@ -11,7 +11,14 @@ ssh_known_hosts:
   - github.com
   - bitbucket.org
 
+#example  
+#- {
+#     name: "test.local",
+#     local_path: "/projects/test.local",
+#     virtual_path: "/var/www/test.local",
+#     webroot: "/var/www/test.local",
+#     database: "test_local",
+#     git_repo: "test-local.git"
+#   }
+
 projects: 
-  - {
-      
-    }
