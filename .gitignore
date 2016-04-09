@@ -1,3 +1,5 @@
 # vagrant
 .vagrant/
 .DS_Store
+Vagrantfile
+config.yml
