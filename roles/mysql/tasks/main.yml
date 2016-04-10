@@ -21,3 +21,4 @@
     state=present
     collation=utf8_general_ci
   with_items: "{{ projects }}"
+  when: item.database is defined

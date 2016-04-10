@@ -55,6 +55,12 @@
   notify:
     - restart apache
 
-- name: clone projects
+- name: clone git projects
   git: repo={{ item.git_repo }} dest={{ item.virtual_path }} accept_hostkey=yes update=no
   with_items: "{{ projects }}"
+  when: item.git_repo is defined
+  
+- name: clone hg projects
+  hg: repo={{ item.hg_repo }} dest={{ item.virtual_path }} update=no
+  with_items: "{{ projects }}"
+  when: item.hg_repo is defined
