@@ -26,7 +26,11 @@
     - python-mysqldb
     - php5-mysql
     - php5-intl
+    - php5-curl
     - phpmyadmin
+    - imagemagick
+    - dcraw
+    - libjpeg-progs
     
 - name: start Apache
   become: yes
