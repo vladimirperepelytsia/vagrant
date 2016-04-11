@@ -26,7 +26,10 @@
     - python-mysqldb
     - php5-mysql
     - php5-intl
+    - libcurl3
+    - libcurl3-dev
     - php5-curl
+    - php5-mcrypt
     - phpmyadmin
     - imagemagick
     - dcraw
