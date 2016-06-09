@@ -34,6 +34,17 @@
     - imagemagick
     - dcraw
     - libjpeg-progs
+    - nodejs
+    - npm
+    
+- name: Install npm global pack
+  become: yes
+  become_method: sudo
+  npm: name={{ item }} global=yes
+  with_items:
+    - gulp
+    - grunt-cli
+    - bower
     
 - name: start Apache
   become: yes
