@@ -82,3 +82,6 @@
   hg: repo={{ item.hg_repo }} dest={{ item.virtual_path }} update=no
   with_items: "{{ projects }}"
   when: item.hg_repo is defined
+
+- name: phpmyadmin symlink
+  file: src=/usr/share/phpmyadmin dest=/var/www/html/phpmyadmin force=yes state=link mode=0755

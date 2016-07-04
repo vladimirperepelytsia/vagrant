@@ -1,5 +1,13 @@
 ---
 
+#network settings
+private_network: "192.168.33.77"
+forwarded_port_guest: "4747"
+forwarded_port_host: "4747"
+
+#path to id_rsa key
+id_rsa_path: "/path/to/id_rsa"
+
 #mysql credentials
 host: "localhost"
 root_login: "root"

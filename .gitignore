@@ -1,4 +1,5 @@
 # vagrant
+.idea/
 .vagrant/
 .DS_Store
 Vagrantfile
