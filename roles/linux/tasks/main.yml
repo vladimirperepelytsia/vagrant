@@ -70,8 +70,6 @@
     mode: 0644
     owner: root
     group: root
-  notify:
-    - restart apache
 
 - name: clone git projects
   git: repo={{ item.git_repo }} dest={{ item.virtual_path }} accept_hostkey=yes update=no
@@ -85,3 +83,13 @@
 
 - name: phpmyadmin symlink
   file: src=/usr/share/phpmyadmin dest=/var/www/html/phpmyadmin force=yes state=link mode=0755
+
+- name: a2ensite hosts.conf
+  become: yes
+  become_method: sudo
+  command: a2ensite hosts.conf
+
+- name: restart apache
+  become: yes
+  become_method: sudo
+  service: name=apache2 state=restarted
