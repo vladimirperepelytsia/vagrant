@@ -84,6 +84,11 @@
 - name: phpmyadmin symlink
   file: src=/usr/share/phpmyadmin dest=/var/www/html/phpmyadmin force=yes state=link mode=0755
 
+- name: nodejs symlink
+  become: yes
+  become_method: sudo
+  file: src=/usr/bin/nodejs dest=/usr/bin/node force=yes state=link
+
 - name: a2ensite hosts.conf
   become: yes
   become_method: sudo
