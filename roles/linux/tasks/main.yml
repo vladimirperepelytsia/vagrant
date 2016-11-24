@@ -98,3 +98,45 @@
   become: yes
   become_method: sudo
   service: name=apache2 state=restarted
+
+- name: Add mongo ppa key
+  become: yes
+  become_method: sudo
+  apt_key: >
+    keyserver=hkp://keyserver.ubuntu.com:80
+    id=EA312927
+    state=present
+
+- name: Add mongo sources list
+  become: yes
+  become_method: sudo
+  lineinfile: >
+    line="deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse"
+    dest=/etc/apt/sources.list.d/mongodb-org-3.2.list
+    state=present
+    create=yes
+
+- name: Install mongo
+  become: yes
+  become_method: sudo
+  apt: name=mongodb-org state=latest update_cache=yes
+
+- name: set mongodb service
+  become: yes
+  become_method: sudo
+  template:
+    src: templates/mongodb.service.j2
+    dest: "/etc/systemd/system/mongodb.service"
+    mode: 0644
+    owner: root
+    group: root
+
+- name: set mongodb config
+  become: yes
+  become_method: sudo
+  template:
+    src: templates/mongod.conf.j2
+    dest: "/etc/mongod.conf"
+    mode: 0644
+    owner: root
+    group: root
