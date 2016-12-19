@@ -10,8 +10,8 @@ params = YAML.load_file("config.yml")
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = 'ubuntu/trusty64'
 
-  config.vm.network "forwarded_port", guest: 4646, host: 4646
-  config.vm.network "private_network", ip: "192.168.33.30"
+  config.vm.network "forwarded_port", guest: params["forwarded_port_guest"], host: params["forwarded_port_host"]
+  config.vm.network "private_network", ip: params["private_network"]
 
   # config.ssh.forward_agent = true
   localaliases = []
@@ -31,7 +31,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   #Copy files from the host machine to the guest machine
-  config.vm.provision "file", source: "/path/to/id_rsa_easy", destination: "/home/vagrant/.ssh/id_rsa"
+  config.vm.provision "file", source: params["private_network"], destination: "/home/vagrant/.ssh/id_rsa"
 
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", "1024"]
