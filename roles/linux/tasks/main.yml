@@ -36,7 +36,12 @@
     - libjpeg-progs
     - nodejs
     - npm
-    
+
+- name: enable php5 mcrypt module
+  become: yes
+  become_method: sudo
+  shell: php5enmod mcrypt
+
 - name: Install npm global pack
   become: yes
   become_method: sudo
