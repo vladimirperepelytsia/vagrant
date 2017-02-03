@@ -31,7 +31,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   #Copy files from the host machine to the guest machine
-  config.vm.provision "file", source: params["private_network"], destination: "/home/vagrant/.ssh/id_rsa"
+  config.vm.provision "file", source: params["id_rsa_path"], destination: "/home/vagrant/.ssh/id_rsa"
 
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", "1024"]
