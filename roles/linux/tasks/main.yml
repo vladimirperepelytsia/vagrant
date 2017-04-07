@@ -9,7 +9,7 @@
   become: yes
   become_method: sudo
   apt: upgrade=dist
-  
+
 - name: install packages
   become: yes
   become_method: sudo
@@ -30,6 +30,7 @@
     - libcurl3-dev
     - php5-curl
     - php5-mcrypt
+    - php5-mongo
     - phpmyadmin
     - imagemagick
     - dcraw
@@ -50,22 +51,22 @@
     - gulp
     - grunt-cli
     - bower
-    
+
 - name: start Apache
   become: yes
   become_method: sudo
   service: name=apache2 state=running enabled=yes
-  
+
 - name: enabled mod_rewrite
   become: yes
   become_method: sudo
   apache2_module: name=rewrite state=present
-  
+
 - name: Change project directory permissions
   become: yes
   become_method: sudo
   command: find /var/www -type d -exec chmod 0777 {} \;
-  
+
 - name: set Sites available
   become: yes
   become_method: sudo
@@ -80,7 +81,7 @@
   git: repo={{ item.git_repo }} dest={{ item.virtual_path }} accept_hostkey=yes update=no
   with_items: "{{ projects }}"
   when: item.git_repo is defined
-  
+
 - name: clone hg projects
   hg: repo={{ item.hg_repo }} dest={{ item.virtual_path }} update=no
   with_items: "{{ projects }}"
