@@ -10,6 +10,11 @@
   become_method: sudo
   apt: upgrade=dist
 
+- name: set locale
+  become: yes
+  become_method: sudo
+  shell: update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+
 - name: install packages
   become: yes
   become_method: sudo
