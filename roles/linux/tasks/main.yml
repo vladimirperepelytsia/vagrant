@@ -56,6 +56,16 @@
   become_method: sudo
   shell: php5enmod mcrypt
 
+- name: enable apache proxy module
+  become: yes
+  become_method: sudo
+  shell: a2enmod proxy
+
+- name: enable apache proxy_http module
+  become: yes
+  become_method: sudo
+  shell: a2enmod proxy_http
+
 - name: Install npm global pack
   become: yes
   become_method: sudo

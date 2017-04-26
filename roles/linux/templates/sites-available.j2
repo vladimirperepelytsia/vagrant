@@ -3,12 +3,16 @@
 <VirtualHost *:80>
     ServerName {{ site.name }}
     ServerAlias www.{{ site.name }}
+{% if site.proxy_port is defined %}
+    ProxyPass / http://localhost:{{ site.proxy_port }}/
+{% else %}
     DocumentRoot {{ site.webroot }}
     <Directory {{ site.webroot }}>
         Options Indexes FollowSymLinks MultiViews
         AllowOverride all
         Require all granted
     </Directory>
+{% endif %}
 </VirtualHost>
 {% endif %}
 {% endfor %}
