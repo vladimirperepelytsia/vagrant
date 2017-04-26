@@ -20,12 +20,15 @@ ssh_known_hosts:
   - github.com
   - bitbucket.org
 
+#packages settings
+node_version: "7.x"
+
 #projects data example, add to projects:
 #- {
-#     name: "test.local",
-#     local_path: "/Users/admin/projects/test.local",
-#     virtual_path: "/var/www/test.local",
-#     webroot: "/var/www/test.local",
+#     name: "test.loc",
+#     local_path: "/Users/admin/projects/test.loc",
+#     virtual_path: "/var/www/test.loc",
+#     webroot: "/var/www/test.loc",
 #     database: "test_local",
 #     git_repo: "git@github.com:admin/test.git" (or hg_repo)
 #   }

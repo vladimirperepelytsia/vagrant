@@ -15,6 +15,14 @@
   become_method: sudo
   shell: update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
 
+- name: Remove old nodejs
+  become: yes
+  become_method: sudo
+  shell: echo yes | apt-get purge nodejs npm
+
+- name: Download nodejs
+  shell: curl -sL https://deb.nodesource.com/setup_{{node_version}} | sudo -E bash -
+
 - name: install packages
   become: yes
   become_method: sudo
@@ -26,6 +34,7 @@
     - mercurial
     - apache2
     - libapache2-mod-php5
+    - apache2-utils
     - mysql-server-5.6
     - mysql-client-5.6
     - python-mysqldb
@@ -41,7 +50,6 @@
     - dcraw
     - libjpeg-progs
     - nodejs
-    - npm
 
 - name: enable php5 mcrypt module
   become: yes
