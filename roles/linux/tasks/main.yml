@@ -47,6 +47,7 @@
     - php5-mongo
     - phpmyadmin
     - imagemagick
+    - poppler-utils
     - dcraw
     - libjpeg-progs
     - nodejs
